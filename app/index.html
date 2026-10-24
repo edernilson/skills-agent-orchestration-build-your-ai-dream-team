@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="An illustrative Project Pulse dashboard for contributors.">
+    <title>Project Pulse</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="dashboard">
+      <header class="dashboard-header">
+        <p class="eyebrow">Contributor overview</p>
+        <h1>Project Pulse</h1>
+        <p>Illustrative sample projects — not current team reporting.</p>
+      </header>
+
+      <p id="load-message" role="status">Loading project data…</p>
+
+      <section aria-labelledby="projects-heading">
+        <h2 id="projects-heading">Projects</h2>
+        <div id="project-grid" class="project-grid"></div>
+      </section>
+    </main>
+
+    <script>
+      const requiredFields = ["name", "owner", "status", "recentActivity", "priority"];
+      const grid = document.querySelector("#project-grid");
+      const message = document.querySelector("#load-message");
+
+      function showMessage(text, isError = false) {
+        message.textContent = text;
+        message.hidden = false;
+        message.setAttribute("role", isError ? "alert" : "status");
+      }
+
+      function addField(list, label, value, badgeClass) {
+        const row = document.createElement("div");
+        const term = document.createElement("dt");
+        const description = document.createElement("dd");
+        term.textContent = label;
+
+        if (badgeClass) {
+          const badge = document.createElement("span");
+          badge.className = badgeClass;
+          badge.textContent = value;
+          description.append(badge);
+        } else {
+          description.textContent = value;
+        }
+
+        row.append(term, description);
+        list.append(row);
+      }
+
+      function renderProject(project) {
+        const card = document.createElement("article");
+        card.className = "project-card";
+
+        const heading = document.createElement("h3");
+        heading.textContent = project.name;
+
+        const fields = document.createElement("dl");
+        addField(fields, "Owner", project.owner);
+        addField(fields, "Status", project.status, "status-badge");
+        addField(fields, "Recent activity", project.recentActivity);
+        addField(fields, "Priority", project.priority, "priority-badge");
+
+        card.append(heading, fields);
+        return card;
+      }
+
+      async function loadProjects() {
+        try {
+          const response = await fetch("project-data.json");
+          if (!response.ok) {
+            throw new Error(`Project data could not be loaded (HTTP ${response.status}).`);
+          }
+
+          const data = await response.json();
+          if (!data || !Array.isArray(data.projects)) {
+            throw new Error("Project data is invalid: expected a projects array.");
+          }
+
+          if (data.projects.length === 0) {
+            showMessage("No projects are available yet.");
+            return;
+          }
+
+          const validProjects = data.projects.every((project) =>
+            project && requiredFields.every((field) =>
+              typeof project[field] === "string" && project[field].trim().length > 0
+            )
+          );
+          if (!validProjects) {
+            throw new Error("Project data is invalid: every project needs a name, owner, status, recent activity, and priority.");
+          }
+
+          const cards = data.projects.map(renderProject);
+          grid.replaceChildren(...cards);
+          message.hidden = true;
+        } catch (error) {
+          showMessage(error instanceof Error ? error.message : "Project data could not be loaded.", true);
+        }
+      }
+
+      loadProjects();
+    </script>
+  </body>
+</html>

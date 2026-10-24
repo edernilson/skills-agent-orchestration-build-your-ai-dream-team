@@ -1,0 +1,314 @@
+:root {
+  color-scheme: light;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --ink: #172b3a;
+  --muted: #607483;
+  --canvas: #f3f7f7;
+  --surface: #ffffff;
+  --line: #dce7e8;
+  --teal: #087e79;
+  --teal-dark: #08635f;
+  --teal-soft: #e3f5f1;
+  --shadow-card: 0 3px 10px rgb(20 48 57 / 5%), 0 14px 34px rgb(20 48 57 / 6%);
+  --shadow-raised: 0 8px 18px rgb(20 48 57 / 8%), 0 22px 44px rgb(20 48 57 / 9%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  min-height: 100%;
+  background: var(--canvas);
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  color: var(--ink);
+  background:
+    radial-gradient(ellipse at 88% 0%, rgb(197 235 225 / 42%), transparent 31rem),
+    linear-gradient(180deg, #f7faf9 0%, var(--canvas) 25rem);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+a {
+  color: var(--teal-dark);
+  text-underline-offset: 0.18em;
+}
+
+a:hover {
+  color: #064d4a;
+}
+
+:focus-visible {
+  outline: 3px solid #128e88;
+  outline-offset: 3px;
+}
+
+.dashboard {
+  width: min(100% - 3rem, 1160px);
+  margin-inline: auto;
+  padding-block: clamp(2.5rem, 7vw, 5.75rem) 4rem;
+}
+
+.dashboard > header,
+.dashboard-header {
+  position: relative;
+  margin-bottom: clamp(2rem, 5vw, 3.5rem);
+}
+
+.dashboard > header::before,
+.dashboard-header::before {
+  display: block;
+  width: 2.65rem;
+  height: 0.28rem;
+  margin-bottom: 1.35rem;
+  border-radius: 999px;
+  background: var(--teal);
+  content: "";
+}
+
+.dashboard h1 {
+  max-width: 15ch;
+  margin: 0;
+  color: #132b38;
+  font-size: clamp(2.25rem, 5vw, 3.65rem);
+  font-weight: 750;
+  letter-spacing: -0.055em;
+  line-height: 1.05;
+}
+
+.dashboard > header p,
+.dashboard-header p {
+  max-width: 62ch;
+  margin: 1rem 0 0;
+  color: var(--muted);
+  font-size: clamp(1rem, 1.5vw, 1.125rem);
+}
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 305px), 1fr));
+  align-items: stretch;
+  gap: 1.25rem;
+}
+
+.project-card {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: clamp(1.25rem, 2.6vw, 1.75rem);
+  overflow-wrap: anywhere;
+  border: 1px solid var(--line);
+  border-radius: 1.1rem;
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.project-card:hover {
+  transform: translateY(-3px);
+  border-color: #bfd8d6;
+  box-shadow: var(--shadow-raised);
+}
+
+.project-card h3 {
+  margin: 0 0 0.65rem;
+  color: #193544;
+  font-size: clamp(1.2rem, 2vw, 1.45rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+}
+
+.project-card p {
+  margin: 0;
+}
+
+.project-card > p,
+.project-card .recent-activity {
+  color: #526978;
+  line-height: 1.65;
+}
+
+.project-card dl {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.8rem 1rem;
+  margin: 1.35rem 0 0;
+  padding-top: 1.05rem;
+  border-top: 1px solid #e8eeee;
+}
+
+.project-card dt {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 650;
+  letter-spacing: 0.035em;
+}
+
+.project-card dd {
+  margin: 0;
+  color: #263f4d;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: right;
+}
+
+.project-card .status-badge,
+.project-card .priority-badge,
+.status-badge,
+.priority-badge {
+  display: inline-flex;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.32rem 0.68rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.status-badge {
+  color: #075e59;
+  border-color: #b8e1d9;
+  background: #e3f5f1;
+}
+
+.priority-badge {
+  color: #75430b;
+  border-color: #f0d5a5;
+  background: #fff4dc;
+}
+
+.status-badge.status-active,
+.status-badge.status-in-progress,
+.status-badge.status-on-track {
+  color: #075e59;
+  border-color: #b8e1d9;
+  background: #e3f5f1;
+}
+
+.status-badge.status-blocked,
+.status-badge.status-at-risk,
+.status-badge.status-delayed {
+  color: #8a321f;
+  border-color: #f0c4b8;
+  background: #fff0eb;
+}
+
+.status-badge.status-complete,
+.status-badge.status-completed,
+.status-badge.status-done {
+  color: #354b74;
+  border-color: #cbd6ef;
+  background: #edf1fb;
+}
+
+.priority-badge.priority-low {
+  color: #315a46;
+  border-color: #c7e3d1;
+  background: #edf8f0;
+}
+
+.priority-badge.priority-medium,
+.priority-badge.priority-normal {
+  color: #75500c;
+  border-color: #edd9a5;
+  background: #fff7df;
+}
+
+.priority-badge.priority-high,
+.priority-badge.priority-critical,
+.priority-badge.priority-urgent {
+  color: #872e22;
+  border-color: #efc0b7;
+  background: #fff0ec;
+}
+
+.project-card .status-badge + .priority-badge,
+.project-card .priority-badge + .status-badge {
+  margin-inline-start: 0.3rem;
+}
+
+.project-card footer {
+  margin-top: auto;
+  padding-top: 1.2rem;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.dashboard :is(.empty-state, .error-state) {
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  border: 1px dashed #a9c4c4;
+  border-radius: 1rem;
+  background: rgb(255 255 255 / 72%);
+  color: var(--muted);
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .dashboard {
+    width: min(100% - 2rem, 1160px);
+    padding-block: 2.25rem 3rem;
+  }
+
+  .dashboard > header,
+  .dashboard-header {
+    margin-bottom: 1.75rem;
+  }
+
+  .project-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.9rem;
+  }
+
+  .project-card {
+    padding: 1.2rem;
+    border-radius: 0.95rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .project-card,
+  .status-badge,
+  .priority-badge,
+  .dashboard :is(.empty-state, .error-state) {
+    border: 1px solid CanvasText;
+  }
+
+  :focus-visible {
+    outline-color: Highlight;
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "projects": [
+    {
+      "name": "Example: Atlas",
+      "owner": "Alex Morgan (sample)",
+      "status": "In progress",
+      "recentActivity": "Illustrative update: discovery notes were collected.",
+      "priority": "High"
+    },
+    {
+      "name": "Example: Beacon",
+      "owner": "Jamie Lee (sample)",
+      "status": "Planning",
+      "recentActivity": "Illustrative update: an initial project outline was drafted.",
+      "priority": "Medium"
+    },
+    {
+      "name": "Example: Canopy",
+      "owner": "Taylor Reed (sample)",
+      "status": "On track",
+      "recentActivity": "Illustrative update: a sample milestone was completed.",
+      "priority": "Low"
+    }
+  ]
+}
